@@ -15,9 +15,8 @@ namespace EmployeeManagementAPI.Models
         public string EmployeeName { get; set; }
 
 
-        
+        [Column(TypeName = "nvarchar(500)")]
         public string Email { get; set; }
-        public User User { get; set; }
 
 
         [Column(TypeName = "nvarchar(200)")]

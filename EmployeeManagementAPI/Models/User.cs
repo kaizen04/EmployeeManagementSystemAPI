@@ -56,10 +56,6 @@ namespace EmployeeManagementAPI.Models
         public string DOJ { get; set; }
 
 
-        public int DepartmentId { get; set; }
-        public Department Department { get; set; }
-
-
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string DepartmentName { get; set; }
@@ -72,11 +68,6 @@ namespace EmployeeManagementAPI.Models
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string Password { get; set; }
-
-
-        [Column(TypeName = "nvarchar(500)")]
-        public string PhotoFileName { get; set; }
-
 
         [Required]
         [Column(TypeName = "nvarchar(100)")]

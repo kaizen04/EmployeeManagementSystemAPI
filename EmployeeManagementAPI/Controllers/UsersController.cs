@@ -46,6 +46,7 @@ namespace EmployeeManagementAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(string id, User user)
         {
+
             if (id != user.Email)
             {
                 return BadRequest();
@@ -100,17 +101,38 @@ namespace EmployeeManagementAPI.Controllers
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(string id)
+
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.ToListAsync();
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            foreach(var u in user)
+            {
+                if(u.EmployeeId.ToString() == id)
+                {
+                    _context.Users.Remove(u);
+                    await _context.SaveChangesAsync();
+                }
+            }
+
+            
 
             return NoContent();
+        }
+
+        [HttpGet("/api/username")]
+        public async Task<ActionResult<IEnumerable<String>>> GetUsersname()
+        {
+            List<User> users = await _context.Users.ToListAsync();
+            List<String> vs = new List<String>();
+            foreach (User user in users)
+            {
+                vs.Add(user.Email);
+            }
+            return vs;
         }
 
         private bool UserExists(string id)

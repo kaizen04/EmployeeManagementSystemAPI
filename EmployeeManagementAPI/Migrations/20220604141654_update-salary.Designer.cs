@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeManagementAPI.Migrations
 {
     [DbContext(typeof(EmployeeManagementDbContext))]
-    [Migration("20220603060352_update-salarys")]
-    partial class updatesalarys
+    [Migration("20220604141654_update-salary")]
+    partial class updatesalary
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,7 +54,7 @@ namespace EmployeeManagementAPI.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
@@ -77,12 +77,7 @@ namespace EmployeeManagementAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("UserEmail")
-                        .HasColumnType("nvarchar(500)");
-
                     b.HasKey("PAN");
-
-                    b.HasIndex("UserEmail");
 
                     b.ToTable("SalaryReports");
                 });
@@ -107,9 +102,6 @@ namespace EmployeeManagementAPI.Migrations
                     b.Property<string>("DOJ")
                         .IsRequired()
                         .HasColumnType("nvarchar(15)");
-
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
 
                     b.Property<string>("DepartmentName")
                         .IsRequired()
@@ -137,38 +129,13 @@ namespace EmployeeManagementAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("PhotoFileName")
-                        .HasColumnType("nvarchar(500)");
-
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Email");
 
-                    b.HasIndex("DepartmentId");
-
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("EmployeeManagementAPI.Models.SalaryReport", b =>
-                {
-                    b.HasOne("EmployeeManagementAPI.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserEmail");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("EmployeeManagementAPI.Models.User", b =>
-                {
-                    b.HasOne("EmployeeManagementAPI.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Department");
                 });
 #pragma warning restore 612, 618
         }
